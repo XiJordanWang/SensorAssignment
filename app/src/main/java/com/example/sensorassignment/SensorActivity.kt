@@ -1,6 +1,8 @@
 package com.example.sensorassignment
 
 import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.example.sensorassignment.ui.theme.SensorAssignmentTheme
 
 class SensorActivity : ComponentActivity() {
+    private lateinit var sensorManager: SensorManager
+    private var accelerometer: Sensor? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,9 +38,8 @@ class SensorActivity : ComponentActivity() {
 
     // https://developer.android.com/develop/sensors-and-location/sensors/sensors_motion
     private fun getAccelerometerValue() {
-        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        val sensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        Log.d("TAG", "Obtained accelerometer " + sensor);
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     }
 }
 
