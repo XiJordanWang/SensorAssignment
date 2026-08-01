@@ -1,10 +1,14 @@
 package com.example.sensorassignment
 
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CardDefaults
@@ -21,16 +25,24 @@ class SensorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        getAccelerometerValue()
         setContent {
             Activities()
         }
+    }
+
+    // https://developer.android.com/develop/sensors-and-location/sensors/sensors_motion
+    private fun getAccelerometerValue() {
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        val sensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        Log.d("TAG", "Obtained accelerometer " + sensor);
     }
 }
 
 
 @Composable
 fun Activities() {
-    Column() {
+    Column(modifier = Modifier.fillMaxSize()) {
         for (i in 1..6) {
             ElevatedCard(
                 elevation = CardDefaults.cardElevation(
