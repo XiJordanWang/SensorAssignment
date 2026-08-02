@@ -10,3 +10,6 @@ on https://developer.android.com/develop/ui/compose/layouts/basics
 
 ![accelerometer_info](screenshot/accelerometer_info.png)
 
+
+3. When I tried using object to refresh the page, there is no changes. So I asked Gemini
+

@@ -16,27 +16,51 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.sensorassignment.ui.theme.SensorAssignmentTheme
 
-class AccelerateInfo(val x: Float, val y: Float, val z: Float)
+class Info(val x: Float, val y: Float, val z: Float, val dimension: Number = 3)
 
 class SensorActivity : ComponentActivity() {
     private lateinit var sensorManager: SensorManager
+
+    // Accelerometer
     private var accelerometer: Sensor? = null
+
+    // Gyroscope
+    private var gyroscope: Sensor? = null
+
+    // Magnetometer
+    private var magnetometer: Sensor? = null
+
+    // Proximity
+    private var proximity: Sensor? = null
+
+    // Ambient Light Sensor
+    private var ambientLight: Sensor? = null
+
+    // Barometer
+    private var barometer: Sensor? = null
+
     private lateinit var sensorListener: SensorEventListener
 
-    private var accelerateInfo: AccelerateInfo = AccelerateInfo(0f, 0f, 0f)
+    private var accelerateInfo: Info by mutableStateOf(Info(0f, 0f, 0f, 3))
+    var gyroInfo by mutableStateOf(Info(0f, 0f, 0f, 3))
+    var magnetInfo by mutableStateOf(Info(0f, 0f, 0f, 3))
+    var proxInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
+    var lightInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
+    var barometerInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         getAccelerometerValue()
         setContent {
-            Activities(accelerateInfo)
+            Activities(accelerateInfo, gyroInfo, magnetInfo, proxInfo, lightInfo, barometerInfo)
         }
     }
 
@@ -44,13 +68,42 @@ class SensorActivity : ComponentActivity() {
     private fun getAccelerometerValue() {
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        proximity = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        ambientLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        barometer = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
+
         sensorListener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent) {
-                val xAxis = event.values[0]
-                val yAxis = event.values[1]
-                val zAxis = event.values[2]
+                when (event.sensor.type) {
+                    Sensor.TYPE_ACCELEROMETER -> {
+                        accelerateInfo =
+                            Info(event.values[0], event.values[1], event.values[2], 3)
+                    }
 
-                accelerateInfo = AccelerateInfo(xAxis, yAxis, zAxis)
+                    Sensor.TYPE_GYROSCOPE -> {
+                        gyroInfo =
+                            Info(event.values[0], event.values[1], event.values[2], 3)
+                    }
+
+                    Sensor.TYPE_MAGNETIC_FIELD -> {
+                        magnetInfo = Info(event.values[0], event.values[1], event.values[2], 3)
+                    }
+
+                    Sensor.TYPE_PROXIMITY -> {
+                        proxInfo = Info(event.values[0], 0f, 0f, 1)
+                    }
+
+                    Sensor.TYPE_LIGHT -> {
+                        lightInfo = Info(event.values[0], 0f, 0f, 1)
+                    }
+
+                    Sensor.TYPE_PRESSURE -> {
+                        barometerInfo =
+                            Info(event.values[0], 0f, 0f, 1)
+                    }
+                }
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -66,6 +119,41 @@ class SensorActivity : ComponentActivity() {
         accelerometer?.let {
             sensorManager.registerListener(sensorListener, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
+        gyroscope?.let {
+            sensorManager.registerListener(
+                sensorListener,
+                it,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+        magnetometer?.let {
+            sensorManager.registerListener(
+                sensorListener,
+                it,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+        proximity?.let {
+            sensorManager.registerListener(
+                sensorListener,
+                it,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+        ambientLight?.let {
+            sensorManager.registerListener(
+                sensorListener,
+                it,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+        barometer?.let {
+            sensorManager.registerListener(
+                sensorListener,
+                it,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
     }
 
     override fun onPause() {
@@ -77,44 +165,98 @@ class SensorActivity : ComponentActivity() {
 
 
 @Composable
-fun Activities(accelerateInfo: AccelerateInfo) {
+fun Activities(
+    accelerate: Info,
+    gyro: Info,
+    magnet: Info,
+    prox: Info,
+    light: Info,
+    barometer: Info
+) {
     Column(modifier = Modifier.fillMaxSize()) {
-        for (i in 1..6) {
-            ElevatedCard(
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 6.dp
-                ),
-                modifier = Modifier
-                    .size(width = 240.dp, height = 100.dp)
-            ) {
-                CardInfo("Accelerometer", accelerateInfo)
-            }
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .size(width = 240.dp, height = 100.dp)
+        ) {
+            CardInfo("Accelerometer", accelerate)
+        }
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .size(width = 240.dp, height = 100.dp)
+        ) {
+            CardInfo("Gyroscope", gyro)
+        }
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .size(width = 240.dp, height = 100.dp)
+        ) {
+            CardInfo("Magnetometer", magnet)
+        }
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .size(width = 240.dp, height = 100.dp)
+        ) {
+            CardInfo("Proximity", prox)
+        }
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .size(width = 240.dp, height = 100.dp)
+        ) {
+            CardInfo("Ambient Light Sensor", light)
+        }
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .size(width = 240.dp, height = 100.dp)
+        ) {
+            CardInfo("Barometer", barometer)
         }
     }
 }
 
 @Composable
-fun <T> CardInfo(title: String, details: T) {
+fun CardInfo(title: String, info: Info) {
     Text(
         text = title,
         modifier = Modifier
             .padding(16.dp),
         textAlign = TextAlign.Center,
     )
-    when (details) {
-        is AccelerateInfo -> {
-            Text(text = "X: ${details.x}")
-            Text(text = "Y: ${details.y}")
-            Text(text = "Z: ${details.z}")
+    when (info.dimension) {
+        3 -> {
+            Text(text = "X: ${info.x}", textAlign = TextAlign.Center)
+            Text(text = "Y: ${info.y}", textAlign = TextAlign.Center)
+            Text(text = "Z: ${info.z}", textAlign = TextAlign.Center)
+        }
+
+        1 -> {
+            Text(text = "Value: ${info.x}", textAlign = TextAlign.Center)
         }
     }
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ActivitiesPreview() {
-    SensorAssignmentTheme {
-        Activities(accelerateInfo = AccelerateInfo(0f, 0f, 0f))
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ActivitiesPreview() {
+//    SensorAssignmentTheme {
+//        Activities(accelerateInfo = Info(0f, 0f, 0f))
+//    }
+//}
