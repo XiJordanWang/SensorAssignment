@@ -92,34 +92,42 @@ class SensorActivity : ComponentActivity() {
                         .fillMaxSize()
                         .blur(radius = 16.dp)
                 )
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            SpanStyle(
-                                brush = Brush.linearGradient(
-                                    colors = rainbowColors
-                                ),
-                                fontStyle = FontStyle.Italic
-                            )
-                        ) {
-                            append(" Xi Wang's")
-                        }
-                        append(" assignment!")
-                    },
-                    color = Color.White,
+                Column(
                     modifier = Modifier
-                        .padding(12.dp)
-                        .fillMaxWidth(),
-                    fontSize = 32.sp,
-                )
-                Activities(
-                    accelerometerInfo,
-                    gyroscopeInfo,
-                    magnetometerInfo,
-                    proximityInfo,
-                    ambientLightInfo,
-                    barometerInfo
-                )
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                SpanStyle(
+                                    brush = Brush.linearGradient(
+                                        colors = rainbowColors
+                                    ),
+                                    fontStyle = FontStyle.Italic
+                                )
+                            ) {
+                                append(" Xi Wang's")
+                            }
+                            append(" assignment!")
+                        },
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(top = 48.dp, bottom = 12.dp)
+                            .fillMaxWidth(),
+                        fontSize = 32.sp,
+                        textAlign = TextAlign.Center
+                    )
+//                    Activities(
+//                        accelerometerInfo,
+//                        gyroscopeInfo,
+//                        magnetometerInfo,
+//                        proximityInfo,
+//                        ambientLightInfo,
+//                        barometerInfo
+//                    )
+                }
             }
         }
     }

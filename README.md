@@ -6,8 +6,19 @@ The screenshot of two activities:
 
 - MainActivity:
 
-  ![sensor_activity](screenshot/main_activity.png)
-- SensorAssignment
+![main_activity](screenshot/main_activity.png)
+
+- SensorAssignment：
+
+![main_activity](screenshot/main_activity.png)
+
+### Part B: Connect to one Sensor
+
+### Part C: Connect to five Sensors
+
+### Part D: Connect to all Sensors
+
+### Part E: Responsive Design
 
 I found Layouts introduction in the documentation showed
 on https://developer.android.com/develop/ui/compose/layouts/basics
