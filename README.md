@@ -1,3 +1,13 @@
+# Assignment One: Android and Sensors
+
+### Part A: Setup your App
+
+The screenshot of two activities:
+
+- MainActivity
+  ![main_activity](screenshot/main_activity.png]
+- SensorActivity
+
 # SensorAssignment
 
 I found Layouts introduction in the documentation showed
@@ -14,4 +24,5 @@ on https://developer.android.com/develop/ui/compose/layouts/basics
 
 4.How can I get my new picture as MainActivities background picture?
 
-5. 样式：安卓开发怎么添加全局背景 添加图片背景呢？why this font size is sp not fontSize = 54.sp not dp? 第二个页面：毛玻璃 橫屏沒辦法拖懂
+5. 样式：安卓开发怎么添加全局背景 添加图片背景呢？why this font size is sp not fontSize = 54.sp not
+   dp? 第二个页面：毛玻璃 橫屏沒辦法拖懂
