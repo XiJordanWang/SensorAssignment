@@ -10,7 +10,7 @@ The screenshot of two activities:
 
 - SensorAssignment：
 
-![main_activity](screenshot/main_activity.png)
+![main_activity](screenshot/sensor_activity.png)
 
 ### Part B: Connect to one Sensor
 
