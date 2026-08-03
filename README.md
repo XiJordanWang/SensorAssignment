@@ -5,10 +5,8 @@
 The screenshot of two activities:
 
 - MainActivity
-  ![main_activity](screenshot/main_activity.png]
-- SensorActivity
-
-# SensorAssignment
+  ![sensor_activity](screenshot/main_activity.png)
+- SensorAssignment
 
 I found Layouts introduction in the documentation showed
 on https://developer.android.com/develop/ui/compose/layouts/basics
