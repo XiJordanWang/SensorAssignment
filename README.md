@@ -19,16 +19,18 @@ links:
 - https://developer.android.com/develop/ui/compose/text/style-text
 - https://developer.android.com/develop/ui/compose/components/button
 
+#### Background Picture
+
 I found the background picture for a fitness app on Figma. When I wanted to add this picture, I got
 stuck, so I asked Gemini for help with the prompt:
 
-````
+```
 Can you give me an example of how to add pictures as background in my app using Jetpack Compose?
-````
+```
 
-Gemini's response:
+**Gemini's response:**
 
-````
+```Kotlin
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,12 +86,89 @@ fun BackgroundImageScreen() {
         }
     }
 }
-````
+```
 
 I used the example code to tailor my app and integrated it into my own code structure.
 
-Next step is navigate between two pages. I ask
+### Navigation Between Activities
 
+To implement navigation between the two activities (`MainActivity` and `SensorActivity`), I asked
+Gemini:
+
+```
+How to jump into the new activity by using Jetpack Compose when I click button on my MainActivity? Why? Please give me an example.
+```
+
+**Gemini's response:**
+Gemini explained that I should use an Android `Intent` inside the button's `onClick` lambda, and
+reminded me to declare the new activity inside the `AndroidManifest.xml` file.
+
+```Kotlin
+package com.example.myapplication
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import com.example.myapplication.ui.theme.MyApplicationTheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MyApplicationTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Button(onClick = {
+                            // 1. Create an Intent pointing to SecondActivity
+                            val intent = Intent(this@MainActivity, SecondActivity::class.java)
+
+                            // 2. Start the new Activity
+                            startActivity(intent)
+                        }) {
+                            Text(text = "Jump to Second Activity")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+```xml
+
+<application...>
+
+    <activity android:name=".MainActivity" android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+    <!-- Register the SecondActivity here -->
+    <activity android:name=".SecondActivity" android:exported="false" />
+
+</application>
+```
+
+Based on the example, I modified my version and successfully implemented the click function to
+navigate from `MainActivity` to `SensorActivity`.
 
 ### Part B: Connect to one Sensor
 
