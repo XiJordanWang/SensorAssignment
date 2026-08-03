@@ -8,10 +8,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
@@ -19,40 +25,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class Info(val x: Float, val y: Float, val z: Float, val dimension: Number = 3)
 
 class SensorActivity : ComponentActivity() {
     private lateinit var sensorManager: SensorManager
 
-    // Accelerometer
+    // Accelerometer: Detect rotation, tilt, gravity, and pedometer.
     private var accelerometer: Sensor? = null
 
-    // Gyroscope
+    // Gyroscope: Gaming, VR, and camera.
     private var gyroscope: Sensor? = null
 
-    // Magnetometer
+    // Magnetometer: Use for compass or navigator.
     private var magnetometer: Sensor? = null
 
-    // Proximity
+    // Proximity: When we pick up the phone, this sensor will help us turn off the screen.
     private var proximity: Sensor? = null
 
-    // Ambient Light Sensor
+    // Ambient Light Sensor: This sensor detect the ambient light, mostly using when alter the lightness of the screen.
     private var ambientLight: Sensor? = null
 
-    // Barometer
+    // Barometer: Mostly using in detecting the floor which the users are.
     private var barometer: Sensor? = null
 
     private lateinit var sensorListener: SensorEventListener
 
-    private var accelerateInfo: Info by mutableStateOf(Info(0f, 0f, 0f, 3))
-    var gyroInfo by mutableStateOf(Info(0f, 0f, 0f, 3))
-    var magnetInfo by mutableStateOf(Info(0f, 0f, 0f, 3))
-    var proxInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
-    var lightInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
+    private var accelerometerInfo: Info by mutableStateOf(Info(0f, 0f, 0f, 3))
+    var gyroscopeInfo by mutableStateOf(Info(0f, 0f, 0f, 3))
+    var magnetometerInfo by mutableStateOf(Info(0f, 0f, 0f, 3))
+    var proximityInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
+    var ambientLightInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
     var barometerInfo by mutableStateOf(Info(0f, 0f, 0f, 1))
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +73,24 @@ class SensorActivity : ComponentActivity() {
         enableEdgeToEdge()
         getAccelerometerValue()
         setContent {
-            Activities(accelerateInfo, gyroInfo, magnetInfo, proxInfo, lightInfo, barometerInfo)
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.illustration_fitness_equipments_design_background),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop, // This makes the image fill the screen
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .blur(radius = 16.dp)
+                )
+                Activities(
+                    accelerometerInfo,
+                    gyroscopeInfo,
+                    magnetometerInfo,
+                    proximityInfo,
+                    ambientLightInfo,
+                    barometerInfo
+                )
+            }
         }
     }
 
@@ -78,25 +108,26 @@ class SensorActivity : ComponentActivity() {
             override fun onSensorChanged(event: SensorEvent) {
                 when (event.sensor.type) {
                     Sensor.TYPE_ACCELEROMETER -> {
-                        accelerateInfo =
+                        accelerometerInfo =
                             Info(event.values[0], event.values[1], event.values[2], 3)
                     }
 
                     Sensor.TYPE_GYROSCOPE -> {
-                        gyroInfo =
+                        gyroscopeInfo =
                             Info(event.values[0], event.values[1], event.values[2], 3)
                     }
 
                     Sensor.TYPE_MAGNETIC_FIELD -> {
-                        magnetInfo = Info(event.values[0], event.values[1], event.values[2], 3)
+                        magnetometerInfo =
+                            Info(event.values[0], event.values[1], event.values[2], 3)
                     }
 
                     Sensor.TYPE_PROXIMITY -> {
-                        proxInfo = Info(event.values[0], 0f, 0f, 1)
+                        proximityInfo = Info(event.values[0], 0f, 0f, 1)
                     }
 
                     Sensor.TYPE_LIGHT -> {
-                        lightInfo = Info(event.values[0], 0f, 0f, 1)
+                        ambientLightInfo = Info(event.values[0], 0f, 0f, 1)
                     }
 
                     Sensor.TYPE_PRESSURE -> {
@@ -166,91 +197,115 @@ class SensorActivity : ComponentActivity() {
 
 @Composable
 fun Activities(
-    accelerate: Info,
-    gyro: Info,
-    magnet: Info,
-    prox: Info,
-    light: Info,
+    accelerometer: Info,
+    gyroscope: Info,
+    magnetometer: Info,
+    proximity: Info,
+    ambientLight: Info,
     barometer: Info
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 240.dp, height = 100.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+
         ) {
-            CardInfo("Accelerometer", accelerate)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                modifier = Modifier
+                    .size(width = 172.dp, height = 150.dp)
+            ) {
+                CardInfo("Accelerometer", accelerometer)
+            }
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                modifier = Modifier
+                    .size(width = 172.dp, height = 150.dp)
+            ) {
+                CardInfo("Gyroscope", gyroscope)
+            }
         }
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 240.dp, height = 100.dp)
-        ) {
-            CardInfo("Gyroscope", gyro)
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                modifier = Modifier
+                    .size(width = 172.dp, height = 150.dp)
+            ) {
+                CardInfo("Magnetometer", magnetometer)
+            }
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                modifier = Modifier
+                    .size(width = 172.dp, height = 150.dp)
+            ) {
+                CardInfo("Proximity", proximity)
+            }
         }
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 240.dp, height = 100.dp)
-        ) {
-            CardInfo("Magnetometer", magnet)
-        }
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 240.dp, height = 100.dp)
-        ) {
-            CardInfo("Proximity", prox)
-        }
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 240.dp, height = 100.dp)
-        ) {
-            CardInfo("Ambient Light Sensor", light)
-        }
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 240.dp, height = 100.dp)
-        ) {
-            CardInfo("Barometer", barometer)
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                modifier = Modifier
+                    .size(width = 172.dp, height = 150.dp)
+            ) {
+                CardInfo("Ambient Light Sensor", ambientLight)
+            }
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                modifier = Modifier
+                    .size(width = 172.dp, height = 150.dp)
+            ) {
+                CardInfo("Barometer", barometer)
+            }
         }
     }
 }
 
 @Composable
 fun CardInfo(title: String, info: Info) {
-    Text(
-        text = title,
+    Column(
         modifier = Modifier
-            .padding(16.dp),
-        textAlign = TextAlign.Center,
-    )
-    when (info.dimension) {
-        3 -> {
-            Text(text = "X: ${info.x}", textAlign = TextAlign.Center)
-            Text(text = "Y: ${info.y}", textAlign = TextAlign.Center)
-            Text(text = "Z: ${info.z}", textAlign = TextAlign.Center)
-        }
+            .fillMaxSize()
+            .padding(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+    ) {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 15.sp,
+            textAlign = TextAlign.Center,
+        )
 
-        1 -> {
-            Text(text = "Value: ${info.x}", textAlign = TextAlign.Center)
+        when (info.dimension) {
+            3 -> {
+                Text(text = "X: ${info.x}", textAlign = TextAlign.Center)
+                Text(text = "Y: ${info.y}", textAlign = TextAlign.Center)
+                Text(text = "Z: ${info.z}", textAlign = TextAlign.Center)
+            }
+
+            1 -> {
+                Text(text = "Value: ${info.x}", textAlign = TextAlign.Center)
+            }
         }
     }
-
 }
 
 //@Preview(showBackground = true)
