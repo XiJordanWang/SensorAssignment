@@ -88,7 +88,7 @@ fun BackgroundImageScreen() {
 }
 ```
 
-I used the example code to tailor my app and integrated it into my own code structure.
+I used the example code to fit my app and integrated it into my own code structure.
 
 ### Navigation Between Activities
 
