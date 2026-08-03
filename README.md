@@ -13,9 +13,10 @@ The screenshot of two activities:
 ![main_activity](screenshot/sensor_activity.png)
 
 In this section, I initially read the official documentation provided by Android to learn how to
-develop, which covers topics such as text and buttons, along with the corresponding
+develop, which covers topics such as layout, text, and buttons, along with the corresponding
 links:
 
+- https://developer.android.com/develop/ui/compose/layouts/basics
 - https://developer.android.com/develop/ui/compose/text/style-text
 - https://developer.android.com/develop/ui/compose/components/button
 
@@ -60,7 +61,7 @@ fun BackgroundImageScreen() {
             contentDescription = "Background Image",
             modifier = Modifier.fillMaxSize(),
             // ContentScale.Crop ensures the image fills the screen while maintaining its aspect ratio
-            contentScale = ContentScale.Crop 
+            contentScale = ContentScale.Crop
         )
 
         // 2. Your App Content (layered on top of the image)
@@ -76,7 +77,7 @@ fun BackgroundImageScreen() {
                 style = MaterialTheme.typography.headlineLarge,
                 color = Color.White // Use a contrasting color for readability
             )
-            
+
             Text(
                 text = "This content is placed over a background image.",
                 style = MaterialTheme.typography.bodyLarge,
@@ -177,9 +178,6 @@ navigate from `MainActivity` to `SensorActivity`.
 ### Part D: Connect to all Sensors
 
 ### Part E: Responsive Design
-
-I found Layouts introduction in the documentation showed
-on https://developer.android.com/develop/ui/compose/layouts/basics
 
 2. I ask Gemini about how to write get sensor value and why is it.
 
