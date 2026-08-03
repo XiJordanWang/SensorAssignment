@@ -4,7 +4,8 @@
 
 The screenshot of two activities:
 
-- MainActivity
+- MainActivity:
+
   ![sensor_activity](screenshot/main_activity.png)
 - SensorAssignment
 
