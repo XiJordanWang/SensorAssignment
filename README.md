@@ -8,17 +8,18 @@ The screenshot of two activities:
 
 ![main_activity](screenshot/main_activity.png)
 
-- SensorAssignment：
+- SensorAssignment:
 
-![main_activity](screenshot/sensor_activity.png)
+![sensor_activity](screenshot/sensor_activity.png)
 
 In this section, I initially read the official documentation provided by Android to learn how to
-develop, which covers topics such as layout, text, and buttons, along with the corresponding
+develop, which covers topics such as layout, text, buttons, and images, along with the corresponding
 links:
 
 - https://developer.android.com/develop/ui/compose/layouts/basics
 - https://developer.android.com/develop/ui/compose/text/style-text
 - https://developer.android.com/develop/ui/compose/components/button
+- https://developer.android.com/develop/ui/compose/graphics/images/customize
 
 #### Background Picture
 
@@ -173,19 +174,18 @@ navigate from `MainActivity` to `SensorActivity`.
 
 ### Part B: Connect to one Sensor
 
+![one_sensor](screenshot/one_sensor.png)
+
 ### Part C: Connect to five Sensors
+
+![five_sensors](screenshot/five_sensors.png)
+
+I read the documentation showed below:
+https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview
 
 ### Part D: Connect to all Sensors
 
+https://developer.android.com/develop/ui/compose/lists
+
+
 ### Part E: Responsive Design
-
-2. I ask Gemini about how to write get sensor value and why is it.
-
-![accelerometer_info](screenshot/accelerometer_info.png)
-
-3. When I tried using object to refresh the page, there is no changes. So I asked Gemini
-
-4.How can I get my new picture as MainActivities background picture?
-
-5. 样式：安卓开发怎么添加全局背景 添加图片背景呢？why this font size is sp not fontSize = 54.sp not
-   dp? 第二个页面：毛玻璃 橫屏沒辦法拖懂
