@@ -176,16 +176,17 @@ navigate from `MainActivity` to `SensorActivity`.
 
 ![one_sensor](screenshot/one_sensor.png)
 
+I read the documentation showed below:
+https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview
+
+
 ### Part C: Connect to five Sensors
 
 ![five_sensors](screenshot/five_sensors.png)
 
-I read the documentation showed below:
-https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview
 
 ### Part D: Connect to all Sensors
 
 https://developer.android.com/develop/ui/compose/lists
-
 
 ### Part E: Responsive Design
