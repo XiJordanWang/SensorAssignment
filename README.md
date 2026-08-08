@@ -10,7 +10,7 @@ The screenshot of two activities:
 
 ![main_activity](screenshot/main_activity.png)
 
-- SensorAssignment:
+- SensorActivity:
 
 ![sensor_activity](screenshot/sensor_activity.png)
 
