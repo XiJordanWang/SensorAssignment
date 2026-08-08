@@ -89,7 +89,7 @@ class SensorActivity : ComponentActivity(), SensorEventListener {
                                         fontStyle = FontStyle.Italic
                                     )
                                 ) {
-                                    append(" Xi Wang's")
+                                    append("Xi Wang's")
                                 }
                                 append(" assignment!")
                             },

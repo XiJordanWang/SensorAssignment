@@ -90,7 +90,7 @@ fun Greeting(modifier: Modifier = Modifier) {
                             fontStyle = FontStyle.Italic
                         )
                     ) {
-                        append(" Xi Wang's")
+                        append("Xi Wang's")
                     }
                     append(" assignment!")
                 },
