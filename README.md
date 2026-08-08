@@ -183,15 +183,22 @@ navigate from `MainActivity` to `SensorActivity`.
 
 ![one_sensor](screenshot/one_sensor.png)
 
-I read the documentation showed below and finished my implementation without using AI:
+I read the documentation showed below and finished my implementation of accelerate sensor without
+using AI:
 https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview
-
 
 ### Part C: Connect to five Sensors
 
 ![five_sensors](screenshot/five_sensors.png)
 
 I did not use AI at this part. I finished this part by reading the documentation.
+As the screenshot showed, I implemented the sensors as below:
+
+- Accelerometer
+- Gyroscope
+- Magnetometer
+- Proximity
+- Ambient Light Sensor
 
 ### Part D: Connect to all Sensors
 
@@ -209,7 +216,26 @@ val deviceSensors: List<Sensor> = sensorManager.getSensorList(Sensor.TYPE_ALL)
 ```
 
 After get the list of all sensors, I read the parameters of each sensor and implemented them in my
-code.
+code, which include:
+
+- Accelerometer
+- Gyroscope
+- Magnetic Field
+- Orientation
+- Ambient Temperature
+- Proximity
+- Light
+- Pressure
+- Relative Humidity
+- Magnetic Field Uncalibrated
+- Gyroscope Uncalibrated
+- Accelerometer Uncalibrated
+- Game Rotation Vector
+- Geomagenetic Rotation Vector
+- Gravity
+- Linear Acceleration
+- Rotation Vector
+- Orientation
 
 ### Part E: Responsive Design
 
