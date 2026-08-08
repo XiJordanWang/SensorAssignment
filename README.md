@@ -183,7 +183,7 @@ navigate from `MainActivity` to `SensorActivity`.
 
 ![one_sensor](screenshot/one_sensor.png)
 
-I read the documentation showed below and finished my implementation:
+I read the documentation showed below and finished my implementation without using AI:
 https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview
 
 
