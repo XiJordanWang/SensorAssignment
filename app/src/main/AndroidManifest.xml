@@ -25,8 +25,7 @@
         </activity>
         <activity
             android:name=".SensorActivity"
-            android:exported="false"
-            android:label="Sensor Details" />
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -63,7 +63,7 @@ class SensorActivity : ComponentActivity(), SensorEventListener {
             Box(modifier = Modifier.fillMaxSize()) {
                 Image(
                     painter = painterResource(id = R.drawable.illustration_fitness_equipments_design_background),
-                    contentDescription = null,
+                    contentDescription = "Background",
                     contentScale = ContentScale.Crop, // This makes the image fill the screen
                     modifier = Modifier
                         .fillMaxSize()

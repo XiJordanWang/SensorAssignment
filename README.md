@@ -1,5 +1,7 @@
 # Assignment One: Android and Sensors
 
+Author: Xi Wang
+
 ### Part A: Setup your App
 
 The screenshot of two activities:
@@ -12,7 +14,7 @@ The screenshot of two activities:
 
 ![sensor_activity](screenshot/sensor_activity.png)
 
-In this section, I initially read the official documentation provided by Android to learn how to
+In this section, I mostly read the official documentation provided by Android to learn how to
 develop, which covers topics such as layout, text, buttons, and images, along with the corresponding
 links:
 
@@ -21,9 +23,13 @@ links:
 - https://developer.android.com/develop/ui/compose/components/button
 - https://developer.android.com/develop/ui/compose/graphics/images/customize
 
+When I use AI, I just ask him give me an example for development.
+
 #### Background Picture
 
-I found the background picture for a fitness app on Figma. When I wanted to add this picture, I got
+I found the background picture for a fitness app on <i>[Figma](https://www.figma.com/)</i>. When I
+wanted
+to add this picture, I got
 stuck, so I asked Gemini for help with the prompt:
 
 ```
@@ -135,12 +141,13 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
+                        val context = LocalContext.current
                         Button(onClick = {
                             // 1. Create an Intent pointing to SecondActivity
-                            val intent = Intent(this@MainActivity, SecondActivity::class.java)
+                            val intent = Intent(context, SecondActivity::class.java)
 
                             // 2. Start the new Activity
-                            startActivity(intent)
+                            context.startActivity(intent)
                         }) {
                             Text(text = "Jump to Second Activity")
                         }
@@ -176,7 +183,7 @@ navigate from `MainActivity` to `SensorActivity`.
 
 ![one_sensor](screenshot/one_sensor.png)
 
-I read the documentation showed below:
+I read the documentation showed below and finished my implementation:
 https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview
 
 
@@ -184,9 +191,38 @@ https://developer.android.com/develop/sensors-and-location/sensors/sensors_overv
 
 ![five_sensors](screenshot/five_sensors.png)
 
+I did not use AI at this part. I finished this part by reading the documentation.
 
 ### Part D: Connect to all Sensors
 
-https://developer.android.com/develop/ui/compose/lists
+![all_sensors](screenshot/all_sensors_1.png)
+![all_sensors](screenshot/all_sensors_2.png)
+![all_sensors](screenshot/all_sensors_3.png)
+
+I did not use AI at this part. I just use the Android document as the same path from the previous
+section.
+
+The code on the document showcases how to get the list of all sensors.
+
+```kotlin
+val deviceSensors: List<Sensor> = sensorManager.getSensorList(Sensor.TYPE_ALL)
+```
+
+After get the list of all sensors, I read the parameters of each sensor and implemented them in my
+code.
 
 ### Part E: Responsive Design
+
+I chose three type of devises in this part, including pixel 9, pixel tablets, and small phone.
+
+![pixel_portrait](screenshot/pixel9_portrait.png)
+![pixel_landscape](screenshot/pixel9_landscape.png)
+![pixel_tablet_portrait](screenshot/pixel_tablet_portrait.png)
+![pixel_tablet_landscape](screenshot/pixel_tablet_landscape.png)
+![small_phone_portrait](screenshot/small_phone_portrait.png)
+![small_phone_landscape](screenshot/small_phone_landscape.png)
+
+I do not use AI at this part. As alternative, I found the solution
+from <i>[Lazy lists and lazy grids](https://developer.android.com/develop/ui/compose/lists)</i> on
+the Android document. When we choose different devices or change the direction, the LazyGrid could
+adapt different screen.

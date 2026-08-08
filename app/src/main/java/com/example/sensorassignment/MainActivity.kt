@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(id = R.drawable.heart_beat_is_shown_black_background),
-                        contentDescription = null,
+                        contentDescription = "Background",
                         contentScale = ContentScale.Crop, // This makes the image fill the screen
                         modifier = Modifier.fillMaxSize()
                     )
